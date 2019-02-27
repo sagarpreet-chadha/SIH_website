@@ -1,4 +1,4 @@
- var bounds = new L.LatLngBounds(new L.LatLng(84.67351257 , -172.96875) , new L.LatLng(-54.36775852 , 178.59375)) ;
+  var bounds = new L.LatLngBounds(new L.LatLng(84.67351257 , -172.96875) , new L.LatLng(-54.36775852 , 178.59375)) ;
   var map = L.map('mapid' , {
       maxBounds: bounds , 
       maxBoundsViscosity: 0.75
@@ -7,15 +7,14 @@
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map) ; 
 
-
-// LEL 
-   var SkyTruth = L.layerGroup.skyTruthLayer().addTo(map) ;
+   // LEL 
+   var SkyTruth = L.layerGroup.skyTruthLayer() ;
    var ToxicRelease = L.layerGroup.toxicReleaseLayer() ;
    var OpenInfraMap_Water = L.tileLayer('https://tiles-{s}.openinframap.org/water/{z}/{x}/{y}.png',{
       maxZoom: 18,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://www.openinframap.org/about.html">About OpenInfraMap</a>'
     });
-
+   var OdorReport = L.layerGroup.odorReportLayer() ;
    var cloudscls = L.OWM.cloudsClassic({});
 
    var precipitationcls = L.OWM.precipitationClassic({});
@@ -31,3 +30,54 @@
    var baseMaps = {
       "Baselayer": baselayer
     };
+
+     var overlayMaps = {
+     // "PurpleAirLayer-HeatMap": PurpleLayer ,
+      	 "SkyTruth": SkyTruth , 
+      	 "ToxicRelease": ToxicRelease ,
+      	 "OdorReport": OdorReport ,
+      	 "OpenInfraMap_Water": OpenInfraMap_Water ,
+         "clouds (classic)": cloudscls ,
+         "precipitation (classic)": precipitationcls , 
+         "rain (classic)": raincls ,
+         "snow": snow ,  
+         "Cities (zoom in)": city  , 
+         "windrose (zoom in)": windrose
+    };
+
+    L.control.layers(baseMaps,overlayMaps).addTo(map);
+
+
+// chartjs
+
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["Malaria", "Dengue"],
+        datasets: [{
+            label: '# of cases : ',
+            data: [12,5],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+
+    

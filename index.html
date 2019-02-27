@@ -2,6 +2,9 @@
 <html>
 <head>
 	<title>index</title>
+
+  <link rel="stylesheet" type="text/css" href="CSS/map.css">
+
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -24,12 +27,15 @@
 
    <script type="text/javascript" src="node_modules/leaflet-environmental-layers/dist/LeafletEnvironmentalLayers.js"></script>
 
+   <script type="text/javascript" src="node_modules/leaflet-environmental-layers/dist/windRoseLayer.js"></script>
+
    <script type="text/javascript" src="node_modules/leaflet-spin/example/spin/dist/spin.min.js"></script>
    <script type="text/javascript" src="node_modules/leaflet-spin/example/leaflet.spin.min.js"></script>
 
-   <style type="text/css">
-   	#mapid { height: 100vh ; }
-   </style>
+   <!-- chartjs --> 
+
+   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+   
 </head>
 <body>
 
@@ -81,9 +87,34 @@
  <div id="mapid"></div>
 
 
-  <script src="JS/map.js"></script>
+ 
 
+<br>
+ <div class="container">
+   <div id="1" class="item" style="background:  #dff6e6">
 
+     <canvas id="myChart" width="200px" height="90px"> </canvas>
+   
+   </div>
+   <div id="2" class="item" style="background:  #dff6e6">
+    <strong>Economics Analysis </strong>
+    <br>
 
+    <img src="https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/4767075/300/200/m1/fpnw/wm0/tourism-logo-.jpg?1531778335&s=241cfcdbaac0c13ec71f3fd4a469cac5" class="image-icon">
+  
+    
+    <img src="https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/1192112/580/386/m1/fpnw/wm0/1-.jpg?1461038042&s=94404d3bd0f0593dd1a67419e6a5adb5" class="image-icon">
+   
+    
+    <img src="https://img.freepik.com/free-vector/transport-logos-set_23-2147496996.jpg?size=338&ext=jpg" class="image-icon">
+
+   </div>
+   <div id="3" class="item" style="background:  #dff6e6">
+     
+
+   </div>
+ </div>
+
+ <script src="JS/map.js"></script>
 </body>
 </html>
