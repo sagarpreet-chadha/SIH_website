@@ -1,0 +1,11 @@
+{
+  "name": "WaterBorne",
+  "version": "1.0.0",
+  "description": "Website for water borne diseases ",
+  "main": "index.js",
+  "author": "Tuba , Sagarpreet",
+  "license": "MIT" ,
+  "dependencies": {
+	"leaflet-environmental-layers" : "^1.2.4"
+   }
+}
