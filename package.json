@@ -6,6 +6,9 @@
   "author": "Tuba , Sagarpreet",
   "license": "MIT" ,
   "dependencies": {
-	"leaflet-environmental-layers" : "^1.2.4"
+	"leaflet-environmental-layers" : "^1.2.4",
+	"leaflet-blurred-location" : "^1.2.7",
+	"jquery": "^3.2.1",
+	"leaflet-heatmap": "1.0.0"
    }
 }

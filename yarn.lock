@@ -2,15 +2,29 @@
 # yarn lockfile v1
 
 
+haversine-distance@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/haversine-distance/-/haversine-distance-1.1.4.tgz#78578c5623e75f2d791d954ca947731986b95591"
+  integrity sha512-ElW49a3HbKhoIlFQ7gGvazYyi9etz5e1hrUDS/Z9MCvtm5iQm1YAvd9Rx8Oy121h+0X7PbsjBBRKDH4Otr0JuA==
+
 heatmap.js@*:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/heatmap.js/-/heatmap.js-2.0.5.tgz#466d3b86513f5d49112a49d25700ab2730149153"
   integrity sha1-Rm07hlE/XUkRKknSVwCrJzAUkVM=
 
-jquery@^3.3.1:
+jquery@^3.2.1, jquery@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
   integrity sha512-Ubldcmxp5np52/ENotGxlLe6aGMvmF4R8S6tZjsP6Knsaxd/xp3Zrh50cG93lR6nPXyUFwzN3ZSOQI0wRJNdGg==
+
+leaflet-blurred-location@^1.2.7:
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/leaflet-blurred-location/-/leaflet-blurred-location-1.2.7.tgz#be4a7bbc745fa01985da2aad36e92547ee87de9d"
+  integrity sha512-/eckjqt+o4AAoKzROn+Oo/JjD+4HwyFsH4EVS8QW/JgF6/cMz0IVQ1pv0mAoyPIi0+Wv8dzokyuvuqcZFqjm8g==
+  dependencies:
+    haversine-distance "^1.1.4"
+    jquery "^3.2.1"
+    leaflet "^1.3.3"
 
 leaflet-environmental-layers@^1.2.4:
   version "1.2.4"
@@ -48,7 +62,7 @@ leaflet-spin@1.1.0:
   dependencies:
     spin.js "^2.3.1"
 
-leaflet@*, leaflet@^1.3.1:
+leaflet@*, leaflet@^1.3.1, leaflet@^1.3.3:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.4.0.tgz#d5f56eeb2aa32787c24011e8be4c77e362ae171b"
   integrity sha512-x9j9tGY1+PDLN9pcWTx9/y6C5nezoTMB8BLK5jTakx+H7bPlnbCHfi9Hjg+Qt36sgDz/cb9lrSpNQXmk45Tvhw==

@@ -3,6 +3,9 @@
 <head>
 	<title>index</title>
 
+   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+   
+
   <link rel="stylesheet" type="text/css" href="CSS/map.css">
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -20,6 +23,24 @@
    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
    integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
    crossorigin=""></script>
+
+    <!-- Heatmap--> 
+
+
+   <script src="node_modules/heatmap.js/build/heatmap.min.js"></script>
+   <script src="node_modules/leaflet-heatmap/leaflet-heatmap.js"></script>
+
+    <!-- leaflet blurred location --> 
+
+  <script src="https://maps.googleapis.com/maps/api/js?libraries=places&language=en&key=AIzaSyDWgc7p4WWFsO3y0MTe50vF4l4NUPcPuwE"></script>
+
+  <script src="node_modules/leaflet-blurred-location/dist/Leaflet.BlurredLocation.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="node_modules/leaflet-blurred-location/dist/Leaflet.BlurredLocation.css" rel="stylesheet">
+   <script src="http://cdn.jsdelivr.net/gh/makinacorpus/Leaflet.Spin/example/spin/dist/spin.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/makinacorpus/Leaflet.Spin/leaflet.spin.min.js"></script>
+
 
     <!-- LEL --> 
 
@@ -39,9 +60,194 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      
+
+        <h5 class="modal-title" id="exampleModalLongTitle">Add Patient Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form id="patient_details" action="https://80fae82c.ngrok.io/db/user/" method="post">
+          <div class="form-group">
+            <label for="exampleInputName">User Name</label>
+            <input type="text" id="username" name="username" placeholder="Enter Name">
+          </div>
+
+           <div class="form-group">
+            <label for="exampleInputName">First Name</label>
+            <input type="text" id="first_name" name="first_name" placeholder="Enter First Name">
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputName">Last Name</label>
+            <input type="text" id="first_name" name="last_name" placeholder="Enter Last Name">
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputName">Password</label>
+            <input type="password" id="password" name="password" value="1234567">
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="patient_email" aria-describedby="emailHelp" placeholder="Enter email" name="email">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">Pin code</label>
+            <input type="text" class="form-control" id="patient_pin" placeholder="Enter Pin code" name="pincode">
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">Age </label>
+            <input type="number" class="form-control" id="patient_age" placeholder="Enter Age" name="age">
+          </div>
+          
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+            <label class="form-check-label" for="exampleRadios1">
+              Male
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+            <label class="form-check-label" for="exampleRadios2">
+              Female
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+            <label class="form-check-label" for="exampleRadios2">
+              Others
+            </label>
+          </div>
+          
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" >Add</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal class to add markers -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter_add" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Add Marker on map</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form id="hospital_details" action="https://80fae82c.ngrok.io/db/hospital/?format=json" method="post">
+          
+          <!-- <div class="form-check">
+             <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+            <label for="exampleInputName">Hospitals</label>
+          </div>
+          
+          <div class="form-check">
+             <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+            <label for="exampleInputName">Test Labs </label>
+          </div>
+
+          <div class="form-check">
+             <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+            <label for="exampleInputName">Dispensaries</label>
+          </div> -->
+
+          <div class="form-group">
+            <label for="exampleInputName">User Name</label>
+            <input type="text" id="username" name="username" placeholder="Enter Name">
+          </div>
+
+           <div class="form-group">
+            <label for="exampleInputName">First Name</label>
+            <input type="text" id="first_name" name="first_name" placeholder="Enter First Name">
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputName">Last Name</label>
+            <input type="text" id="first_name" name="last_name" placeholder="Enter Last Name">
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputName">Password</label>
+            <input type="password" id="password" name="password" value="1234567">
+          </div>
+
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">Pin code</label>
+            <input type="text" class="form-control" id="patient_pin" placeholder="Enter Pin code" name="pincode">
+          </div>
+
+          <input type="hidden" id="password" name="malaria_free" value="1">
+          <input type="hidden" id="password" name="tb_free" value="1">
+          <input type="hidden" id="password" name="dengue_free" value="1">
+
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" onclick="submitMarker(document.getElementById('name_marker').value , document.getElementById('lat').value , document.getElementById('lon').value);">Add</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal class for predict disease feature ! -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      
+
+        <h5 class="modal-title" id="exampleModalLongTitle">Add Symptoms</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div id="symptoms_id">
+
+         <!--  <div class="form-group"> 
+            <input type="checkbox"  id="exampleInputEmail1" >
+            <label for="exampleInputName">Coughing up blood.</label>
+          </div> -->
+          
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="getDisease() ;" data-dismiss="modal">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   	<!-- Navbar content -->
-  <a class="navbar-brand" href="#">Company name</a>
+  
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -49,9 +255,9 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="#"><i class="fas fa-street-view"></i> <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link" href="#">Outbreak</a>
       </li>
       <li class="nav-item dropdown">
@@ -61,60 +267,97 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#">Dengue</a>
           <a class="dropdown-item" href="#">Malaria</a>
+          <a class="dropdown-item" href="#">Tuberculosis</a>
         
       </li>
-      <li class="nav-item">
+     <!--  <li class="nav-item">
         <a class="nav-link" href="#">Add alert</a>
-      </li>
+      </li> -->
 
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <li class="nav-item">
+        <a class="nav-link" href="startbootstrap-sb-admin-2/index.html" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">
           Analysis
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Prediction</a>
-          <a class="dropdown-item" href="#">Actual</a>
-        
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    
+
+    <button type="button" class="btn btn-outline-light my-2 my-sm-0" data-toggle="modal" data-target="#exampleModalCenter_add">Add Hospitals</button>
+    &nbsp; &nbsp;
+    <button type="button" class="btn btn-outline-light my-2 my-sm-0" data-toggle="modal" data-target="#exampleModalCenter1" onclick="parseSymptoms() ;">Predict Disease</button>
+    &nbsp; &nbsp;
+      <button type="button" class="btn btn-outline-light my-2 my-sm-0" data-toggle="modal" data-target="#exampleModalCenter">Add Patient Details</button>
+  
   </div>
 </nav>
+    
+    <br><br>
+
+    <div class="container">
+      <div class="row">
+      
+
+      <div class="col-sm">
+        <div >
+
+          <p><input id="placenameInput" type="text" class="form-control" style="width: 707px;" /></p>
+        </div>
+      </div>  
+
+       <div class="col-sm">
+
+          <label>
+          <p><button class="btn btn-dark" onclick="blurredLocation.geocodeWithBrowser(true);">
+            <div id="ldi-geocode-button">          
+              Get my location
+            </div>
+
+          </button>
+
+            <button class="btn btn-success" onclick="actual_function() ;">
+            <div id="actual-button">          
+              Actual
+            </div>
+            </button>
+
+            <button class="btn btn-warning" onclick="predicted_function() ;">
+            <div id="predicted-button">          
+             Predicted
+            </div>
+            </button>
+        </p>
+        </label>
+      </div>
+     </div>
+    </div>
 
  <div id="mapid"></div>
 
-
- 
-
 <br>
- <div class="container">
-   <div id="1" class="item" style="background:  #dff6e6">
 
-     <canvas id="myChart" width="200px" height="90px"> </canvas>
-   
-   </div>
-   <div id="2" class="item" style="background:  #dff6e6">
-    <strong>Economics Analysis </strong>
-    <br>
+<div style="margin-left: 25%;">
+<button type="button" class="btn btn-outline-primary btn-lg" onclick="getHospitals();"><i class="fas fa-ambulance"></i> &nbsp;  Nearby hospitals</button>
+<button type="button" class="btn btn-outline-danger btn-lg" onclick="getLabs();"><i class="fas fa-flask"></i> &nbsp;  Nearby Test Labs</button>
+<button type="button" class="btn btn-outline-warning btn-lg" onclick="getDispencaries();"> <i class="fas fa-pills"></i> &nbsp; Nearby Dispensaries</button>
+</div>
 
-    <img src="https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/4767075/300/200/m1/fpnw/wm0/tourism-logo-.jpg?1531778335&s=241cfcdbaac0c13ec71f3fd4a469cac5" class="image-icon">
-  
-    
-    <img src="https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/1192112/580/386/m1/fpnw/wm0/1-.jpg?1461038042&s=94404d3bd0f0593dd1a67419e6a5adb5" class="image-icon">
-   
-    
-    <img src="https://img.freepik.com/free-vector/transport-logos-set_23-2147496996.jpg?size=338&ext=jpg" class="image-icon">
+                  <br><br>
+              
+            <div class="card">      
+              <div style="margin-left: 45% ; padding-top: 12px;">   
+                <h4>Predicted diseases</h4>  
+              </div>
 
-   </div>
-   <div id="3" class="item" style="background:  #dff6e6">
-     
+                <div class="card-body">
+                  <div class="chart-area">
+                    <canvas id="myBarChart_predicted"></canvas>
+                  </div>
+                </div>
+            </div>   
 
-   </div>
- </div>
-
+ <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+ <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
  <script src="JS/map.js"></script>
+
 </body>
 </html>
